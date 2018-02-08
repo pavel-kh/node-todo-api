@@ -1,0 +1,9 @@
+{
+  "name": "node-todo-api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "mongodb": "^2.2.5"
+  }
+}
