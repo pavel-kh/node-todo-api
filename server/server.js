@@ -1,6 +1,5 @@
-var { mongoose } = require('./db/mongoose');
 var { Todo } = require('./modules/todo');
-var { User } = require('./modules/user');
+// var { User } = require('./modules/user');
 var bodyParser = require('body-parser');
 const express = require('express');
 var app = express();
