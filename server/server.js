@@ -1,10 +1,14 @@
 var { Todo } = require('./modules/todo');
+var {mangoose} = require('./db/mongoose');
 // var { User } = require('./modules/user');
 var bodyParser = require('body-parser');
 var { ObjectID } = require('mongodb');
 const express = require('express');
 var app = express();
 app.use(bodyParser.json());
+
+
+
 app.post('/todos', (req, res) => {
     console.log(req.body);
     var todo = new Todo({
