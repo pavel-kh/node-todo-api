@@ -38,12 +38,13 @@ describe('POST /todos', () => {
             .expect(400)
             .end((err, res) => {
                 if (err) {
-                    done(err);
+                    return done(err);
                 }
-                Todo.find().then((todos)=>{
+                Todo.find().then((todos) => {
                     expect(todos.length).toBe(0);
-                });
-                done();
-            }).catch((e) => done(e));
+                    done();
+                }).catch((e) => done(e));
+                
+            });
     });
 });
