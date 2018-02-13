@@ -137,3 +137,24 @@ describe('DELETE /todos/:id', () => {
             .end(done);
     });
 });
+
+
+describe('PATCH /todos/:id', () => {
+    it('should update the todo', (done) => {
+        var hexId = todos[1]._id.toHexString();
+        var body = { completed: true };
+        request(app)
+            .patch(`/todos/${hexId}`)
+            .send(body)
+            .expect(200)
+            .end((err, res) => {
+                if (err) {
+                    return done(err);
+                }
+                Todo.findById(hexId).then((todo) => {
+                    expect(todo.completed).toBeTruthy();
+                    done();
+                }).catch(e => done(e));
+            });
+    });
+});
