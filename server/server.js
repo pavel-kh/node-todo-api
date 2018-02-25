@@ -1,7 +1,7 @@
-const config =  require('./config/config');
+const config = require('./config/config');
 const { Todo } = require('./modules/todo');
 const { mangoose } = require('./db/mongoose');
-// var { User } = require('./modules/user');
+var { User } = require('./modules/user');
 const bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
 const express = require('express');
@@ -86,6 +86,17 @@ app.patch('/todos/:id', (req, res) => {
         res.send({ todo });
 
     }).catch((e) => res.status(404).send(e));
+});
+
+app.post('/users', (req, res) => {
+    var user = new User(_.pick(req.body,['email','password']));
+    user.save().then(()=>{
+        return user.generateAuthToken();
+    }).then((token)=>{
+        res.header('x-auth',token).send(user);
+    }).catch((e)=>{
+        res.status(404).send(JSON.stringify(e));
+    });
 });
 
 app.listen(port, () => {
