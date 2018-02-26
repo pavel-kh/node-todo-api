@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
 const express = require('express');
 const _ = require('lodash');
-
+var { authenticate } = require('./middleware/authenticate');
 var app = express();
 
 const port = process.env.PORT;
@@ -89,15 +89,22 @@ app.patch('/todos/:id', (req, res) => {
 });
 
 app.post('/users', (req, res) => {
-    var user = new User(_.pick(req.body,['email','password']));
-    user.save().then(()=>{
+    var user = new User(_.pick(req.body, ['email', 'password']));
+    user.save().then(() => {
         return user.generateAuthToken();
-    }).then((token)=>{
-        res.header('x-auth',token).send(user);
-    }).catch((e)=>{
+    }).then((token) => {
+        res.header('x-auth', token).send(user);
+    }).catch((e) => {
         res.status(404).send(JSON.stringify(e));
     });
 });
+
+
+
+app.get('/users/me', authenticate, (req, res) => {
+    res.send(req.user);
+});
+
 
 app.listen(port, () => {
     console.log(`App started on port ${port}`);
