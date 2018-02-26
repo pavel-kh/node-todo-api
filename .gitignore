@@ -64,3 +64,5 @@ typings/
 
 .idea/
 node-todo-api.iml
+package-lock.json
+package-lock.json
